@@ -11,14 +11,15 @@ export class SignUpComponent implements OnInit {
 
 // username = new FormControl("");
 userForm = this.fb.group({
-  userName: ['',[Validators.required, Validators.minLength(3)]],
+  userName: ['',[Validators.required, Validators.minLength(3)],
+  this.customValidator.validateUsernameNotTaken.bind(this.customValidator)],
   password: ['',Validators.required],
   confirmPassword: ['',Validators.required],
   address : this.fb.group({
-    street: [''],
-    city: [''],
+    street: ['',Validators.required],
+    city: ['',Validators.required],
     state: [''],
-    zip:['']
+    zip:['',Validators.required],
   })
 },{
   validator: this.customValidator.passwordMatchValidator('password','confirmPassword')
@@ -47,6 +48,15 @@ userAddressInfo: any={
         zip:this.userAddressInfo.zip
       }
     })
+  }
+  get userName(){
+    return this.userForm.get('userName')
+  }
+  get password(){
+    return this.userForm.get('password')
+  }
+  get confirmpassword(){
+    return this.userForm.get('confirmPassword')
   }
 clear(){
  this.userForm.reset()

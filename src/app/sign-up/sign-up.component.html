@@ -8,27 +8,44 @@
         </div>
         <form  [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group px-1">
-            <label for="username">Username</label>
-            <input type="text" class="form-control"  placeholder="Username" formControlName="userName">
+            <label for="userName">userName</label>
+            <input type="text" class="  form-control"
+            [ngClass]="{'is-invalid':userName?.errors && userName?.touched }"
+            placeholder="userName" formControlName="userName"> 
+            <small class="text-danger" *ngIf="userName?.hasError('usernameTaken') ">Username is taken</small>   
+            <small class="text-danger" *ngIf="userName?.hasError('required') ">Username is required</small>   
+            <small class="text-danger" *ngIf="userName?.hasError('minLength') ">
+                Username must be a least 3characters
+            </small>   
+           
 
         </div>
         <div class="form-group px-1">
             <label for="password">Password</label>
-            <input type="password" class="form-control"  placeholder="Password" formControlName="password">
-
+            <input type="password" class="  form-control" 
+            [ngClass]="{'is-invalid':password?.errors && password?.touched }" 
+             placeholder="Password" formControlName="password">
+            <div class="text-danger"  *ngIf="password?.hasError('required') ">
+                <small>Password required</small>   
+            </div>
         </div>
         <div class="form-group px-1">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" autocomplete  placeholder="Confirm Password" formControlName="confirmPassword">
-
+            <input type="password" class="  form-control"
+             [ngClass]="{'is-invalid':confirmpassword?.errors && confirmpassword?.touched }"
+              autocomplete  placeholder="Confirm Password" formControlName="confirmPassword">
+            <div class="text-danger" *ngIf="confirmpassword?.hasError('passwordMisMatch') ">
+                <small>Password Don't Match</small>   
+            </div>
         </div>
         <div class="" formGroupName="address">
         <div class="row m-0 w-100">
             <div class="col-12 px-1">
                 <div class="form-group">
                     <label for="street">Street</label>
-                    <input type="text" class="form-control"  placeholder="Street" formControlName="street">
-        
+                    <input type="text" class="  form-control"
+                      placeholder="Street" formControlName="street">
+                     
                 </div>
 
             </div>
@@ -37,14 +54,16 @@
             <div class="col-md-6 col-12 px-1">
                 <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control"  placeholder="City" formControlName="city">
-        
+                    <input type="text" class="  form-control"
+                    
+                      placeholder="City" formControlName="city">
+                      
                 </div>
             </div>
             <div class="col-md-4 col-12 px-1">
                 <div class="form-group">
                     <label for="state">State</label>
-                    <select   class="form-control"  placeholder="State" formControlName="state">
+                    <select   class="  form-control  "  placeholder="State" formControlName="state">
                         <option disabled>Choose ...</option>
                         <option  *ngFor="let state of stateOptions" [ngValue]="state">{{state}}</option>
                     </select>
@@ -54,8 +73,10 @@
             <div class="col-md-2 col-12 px-1">
                 <div class="form-group">
                     <label for="zip">Zip</label>
-                    <input type="text" class="form-control"  placeholder="Zip" formControlName="zip">
-        
+                    <input type="text" class="form-control" 
+                     
+                     placeholder="Zip" formControlName="zip">
+                      
                 </div>
             </div>
             
@@ -68,7 +89,9 @@
  
  
         <div class="d-flex">
-            <button class="btn btn-success d-flex align-items-center mr-2" type="submit"(click)="onSubmit()" >
+            <button class="btn btn-success d-flex align-items-center mr-2"
+            [disabled]="userForm.invalid"
+             type="submit"(click)="onSubmit()" >
                 <span class="material-symbols-outlined mr-2">save</span> 
                 <span>Save</span>
                 </button>
