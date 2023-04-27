@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidationService } from '../services/custom-validation.service';
 
 @Component({
@@ -21,6 +21,8 @@ userForm = this.fb.group({
     state: [''],
     zip:['',Validators.required],
   })
+  ,
+  daysAvailable: this.fb.array([this.fb.control("")])
 },{
   validator: this.customValidator.passwordMatchValidator('password','confirmPassword')
 })
@@ -48,6 +50,12 @@ userAddressInfo: any={
         zip:this.userAddressInfo.zip
       }
     })
+  }
+  addDay(){
+    this.daysAvailable.push(this.fb.control(''))
+  }
+  get daysAvailable(){
+    return this.userForm.get('daysAvailable') as FormArray
   }
   get userName(){
     return this.userForm.get('userName')
